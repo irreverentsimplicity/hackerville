@@ -10,7 +10,7 @@ const Counter = ({ font = "Courier" }) =>  {
   });
 
   // Convert date string to Date object
-  const targetDate = new Date("June 8, 2024 12:00:00 UTC");
+  const targetDate = new Date("June 14, 2024 12:00:00 UTC");
 
   useEffect(() => {
     // Calculate remaining time in seconds
