@@ -25,7 +25,7 @@ export default function Airdrop() {
           <br/><br/>
         
             <h2><b>When?</b></h2>
-           The airdrop will start on July 2nd, 2024. The claim window will be open for 1 week.
+           The airdrop will start on July 16th, 2024. The claim window will be open for 1 week.
            <br/><br/>
            <h2><b>How?</b></h2>
            General conditions:
@@ -95,7 +95,7 @@ export default function Airdrop() {
            generated in this airdrop will be 156 hackers * 256 FLIP tokens = 39936.
             <br/><br/>
            <h2><b>When again?</b></h2>
-           The airdrop will start on July 2nd, 2024. The claim window will be open for 1 week. We already told you that.
+           The airdrop will start on July 16th, 2024. The claim window will be open for 1 week. We already told you that.
         
     
       </div>
