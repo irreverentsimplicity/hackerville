@@ -1,10 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import Counter from './components/Counter'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-20">
+      <Header/>
       <div className="z-10 w-full max-w-5xl items-center justify-center font-mono text-lg lg:flex">
         <p className="fixed mb-4 left-0 top-0 right-0 flex w-full justify-center 
         border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-4 
@@ -68,6 +71,7 @@ export default function Home() {
           priority
         />
       </div>
+      
     </main>
   )
 }

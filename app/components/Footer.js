@@ -1,6 +1,6 @@
 //import Link from 'next/link';
 import styles from "../styles/Home.module.css";
-import PackageJSON from "../package.json";
+import PackageJSON from "../../package.json";
 import { Link, HStack, Text, Icon } from '@chakra-ui/react';
 import { FaTwitter} from 'react-icons/fa';
 

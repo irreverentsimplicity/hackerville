@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import { FaWallet} from 'react-icons/fa';
 import { Icon, Select } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { setRpcEndpoint } from "../slices/flippandoSlice";
 import Actions from "../util/actions";
 import Config from '../util/config';
-//import AdenaWallet from "./AdenaWallet";
 
 
 const Wallet = ({ userBalances, userGnotBalances }) => {
