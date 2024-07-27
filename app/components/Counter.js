@@ -44,7 +44,7 @@ const Counter = ({ font = "Courier" }) =>  {
   }, []);
 
   return (
-    <div>
+    <span>
       <span style={{ fontSize: 48, fontFamily: font }}>
         {remainingTime.days}
       </span>
@@ -61,7 +61,7 @@ const Counter = ({ font = "Courier" }) =>  {
         {remainingTime.seconds}
       </span>
       <span style={{ fontSize: 10, fontFamily: font }}>seconds</span>
-    </div>
+    </span>
   );
 };
 

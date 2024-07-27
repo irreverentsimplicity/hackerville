@@ -1,6 +1,6 @@
 {
   "name": "hackerville",
-  "version": "0.1.0",
+  "version": "1.0.3-beta",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
@@ -9,13 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "autoprefixer": "10.4.19",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.3",
-    "next": "14.2.3",
-    "postcss": "8.4.38",
-    "react": "^18.3.1",
-    "react-dom": "18.3.1",
-    "tailwindcss": "3.4.3"
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@gnolang/gno-js-client": "^1.3.0",
+    "@gnolang/tm2-js-client": "^1.2.1",
+    "@material-tailwind/react": "2.1.5",
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^0.27.2",
+    "dotenv": "^16.3.1",
+    "framer-motion": "^10.16.5",
+    "fs": "^0.0.1-security",
+    "long": "^5.2.3",
+    "nanoid": "^4.0.0",
+    "next": "14.2.1",
+    "path": "^0.12.7",
+    "react": "18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.12.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^7.0.0",
+    "autoprefixer": "^10.4.7",
+    "eslint": "8.14.0",
+    "eslint-config-next": "12.1.6",
+    "postcss": "^8.4.13",
+    "tailwindcss": "^3.0.24",
+    "typescript": "^5.2.2"
   }
 }
