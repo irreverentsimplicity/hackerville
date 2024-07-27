@@ -24,7 +24,7 @@ export default function Footer() {
             </a>
           </HStack>
           
-          <div>Flippando Gno - version {PackageJSON.version}</div>
+          <div>Hackerville - version {PackageJSON.version}</div>
             <div>made with &#x2764;&#xFE0F; by <Link href="https://github.com/irreverentsimplicity">@irreverentsimplicity</Link></div>
             <div style={{ display: 'flex', alignItems: 'center'}}>powered by <Link href="https://gno.land">
               <div className="logo-img">
