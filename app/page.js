@@ -1,13 +1,21 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import Counter from './components/Counter'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import { useSelector, useDispatch } from "react-redux";
 
-export default function Home() {
+const Home = () => {
+
+  const rpcEndpoint = useSelector(state => state.hackerville.rpcEndpoint);
+  const userGnotBalances = useSelector(state => state.hackerville.userGnotBalances);
+
   return (
+    
     <main className="flex min-h-screen flex-col items-center justify-between p-20">
-      <Header/>
+    <Header userGnotBalances={userGnotBalances}/>  
       <div className="z-10 w-full max-w-5xl items-center justify-center font-mono text-lg lg:flex">
         <p className="fixed mb-4 left-0 top-0 right-0 flex w-full justify-center 
         border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-4 
@@ -71,7 +79,9 @@ export default function Home() {
           priority
         />
       </div>
-      
+      <Footer />
     </main>
   )
 }
+
+export default Home;

@@ -1,30 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-/*import goerli from '../src/config/testnet/goerli.js';
-import mumbai from '../src/config/testnet/mumbai.js';
-import polygonZkevm from '../src/config/testnet/polygon-zkevm.js';
-import near from '../src/config/testnet/near';
-import evmos from '../src/config/testnet/evmos.js';
-import gnosis from '../src/config/testnet/gnosis.js';
-import arbitrum from '../src/config/testnet/arbitrum.js';
-import optimism from '../src/config/testnet/optimism.js';
-import flippando from '../src/config/testnet/flippando.js';
-*/
-export const setAddresses = createAsyncThunk(
-  'flippando/setAddresses',
-  async (args, thunkAPI) => {
-    console.log('args ' + JSON.stringify(args, null, 2));
-      try {
-       return("12345");
-  
-      } catch (error) {
-        console.error('Error importing file:', error);
-      }
-    
-  },
-);
+import { createSlice } from '@reduxjs/toolkit';
 
-const flippandoSlice = createSlice({
-  name: 'flippando',
+const hackervilleSlice = createSlice({
+  name: 'hackerville',
   initialState: {
     blockchainName: undefined,
     testnet: true,
@@ -32,9 +9,6 @@ const flippandoSlice = createSlice({
     rpcEndpoint: "http://localhost:26657",
     adr: {
       flippandoAddress: undefined,
-      flipAddress: undefined,
-      flippandoBundlerAddress: undefined,
-      flippandoGameMasterAddress: undefined,
     },
     artPayload: [],
     userBalances: {},
@@ -101,29 +75,6 @@ const flippandoSlice = createSlice({
       }
     },
   },
-  extraReducers: {
-    [setAddresses.pending]: (state, action) => {
-      state.adr.flippandoAddress = undefined;
-      state.adr.flipAddress = undefined;
-      state.adr.flippandoBundlerAddress = undefined;
-      state.adr.flippandoBundlerAddress = undefined;
-    },
-    [setAddresses.fulfilled]: (state, action) => {
-      console.log('action.payload ' + JSON.stringify(action.payload, null, 2));
-      const { flippandoAddress, flipAddress, flippandoBundlerAddress, flippandoGameMasterAddress } = action.payload;
-      
-      state.adr.flippandoAddress = flippandoAddress;
-      state.adr.flipAddress = flipAddress;
-      state.adr.flippandoBundlerAddress = flippandoBundlerAddress;
-      state.adr.flippandoGameMasterAddress = flippandoGameMasterAddress;
-    },
-    [setAddresses.rejected]: (state, action) => {
-      state.adr.flippandoAddress = undefined;
-      state.adr.flipAddress = undefined;
-      state.adr.flippandoBundlerAddress = undefined;
-      state.adr.flippandoGameMasterAddress = undefined;
-    },
-  },
 });
 
 export const { 
@@ -136,7 +87,7 @@ export const {
   setUserArtNFTs,
   setBasicMarketplaceListings,
   setArtMarketplaceListings,
-  setRpcEndpoint } = flippandoSlice.actions;
+  setRpcEndpoint } = hackervilleSlice.actions;
 
-export default flippandoSlice;
+export default hackervilleSlice.reducer;
 

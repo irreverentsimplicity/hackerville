@@ -1,16 +1,18 @@
+'use client'
+
 import React from "react";
 import { FaWallet} from 'react-icons/fa';
 import { Icon, Select } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { setRpcEndpoint } from "../slices/flippandoSlice";
+import { setRpcEndpoint } from "../slices/hackervilleSlice";
 import Actions from "../util/actions";
 import Config from '../util/config';
 
 
-const Wallet = ({ userBalances, userGnotBalances }) => {
+const Wallet = ({ userGnotBalances }) => {
 
     const dispatch = useDispatch();
-    const rpcEndpoint = useSelector(state => state.flippando.rpcEndpoint);
+    const rpcEndpoint = useSelector(state => state.hackerville.rpcEndpoint);
     
     const handleNetworkChange = async (event) => {
       const newNetwork = event.target.value;
@@ -45,10 +47,6 @@ const Wallet = ({ userBalances, userGnotBalances }) => {
         <div className="col-span-5 flex justify-end pr-10">
           <div className="rounded-md flex flex-row justify-center items-center mt-3 mr-3 p-2 bg-black-400border border-purple-400" style={{ borderWidth: '0.5px' }}>
           <Icon as={FaWallet} w={6} h={6} alignSelf="left" color={'purple.600'} pr={1}/>
-            <button className="text-sm font-small gap-6 text-white border-transparent focus:outline-none">
-              {userBalances.availableBalance} liquid / {userBalances.lockedBalance} locked
-              $FLIP
-            </button>
           </div>
           <div className="rounded-md flex flex-row justify-center items-center mt-3 p-2 bg-black-400border border-purple-400" style={{ borderWidth: '0.5px' }}>
           <Icon as={FaWallet} w={6} h={6} alignSelf="left" color={'purple.200'} pr={1}/>
