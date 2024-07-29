@@ -69,9 +69,7 @@ class Actions {
   private providerJSON: GnoJSONRPCProvider | null = null;
   private faucetToken: string | null = null;
   private rpcURL: string = Config.GNO_JSONRPC_URL;  
-  private coreRealm: string = Config.GNO_ZENTASKTIC_CORE_REALM;
-  private projectRealm: string = Config.GNO_ZENTASKTIC_PROJECT_REALM;
-  private userRealm: string = Config.GNO_ZENTASKTIC_USER_REALM;
+  private flippandoRealm: string = Config.GNO_FLIPPANDO_REALM;
   private faucetURL: string = Config.FAUCET_URL;
   private chainId: string = "dev"
   private signingKey: string = "test"
@@ -87,8 +85,8 @@ class Actions {
     this.faucetURL = newFaucetUrl;
   }
 
-  public setCoreRealm(newCoreRealm: string): void {
-    this.coreRealm = newCoreRealm;
+  public setFlippandoRealm(newFlippandoRealm: string): void {
+    this.flippandoRealm = newFlippandoRealm;
   }
 
   public setChainId(newChainId: string): void {
@@ -148,6 +146,8 @@ class Actions {
     }
     try {
       // Initialize the wallet using the saved mnemonic
+      // test, to modify in prod
+      mnemonic = "leopard lend cost jaguar devote kick slow glass virus estate cigar ginger furnace coyote donor occur verb glue powder trade pet around erosion abandon"
       this.wallet = await GnoWallet.fromMnemonic(mnemonic);
       //console.log('saved mnemonic ', JSON.stringify(mnemonic))
       console.log(this.wallet);
@@ -299,11 +299,11 @@ class Actions {
   if (gasWanted === null) {
       gasWanted = defaultGasWanted;
   }
-    if (chainId === null) {
-      chainId = "test4"
+    if (chainId === null || chainId === undefined) {
+      chainId = "dev"
     }
-    if (signingKey === null) {
-      signingKey = "zentaskticfaucet"
+    if (signingKey === null || signingKey === undefined) {
+      signingKey = "flippandoairdrop"
     }
     const gkLog = this.gkLog();
     try {
@@ -311,13 +311,13 @@ class Actions {
         const gkArgs = args?.map((arg) => '-args ' + arg).join(' ') ?? '';
         console.log(
           `$ gnokey maketx call -broadcast ` +
-            `-pkgpath ${this.coreRealm} -gas-wanted ${gasWanted} -gas-fee ${defaultTxFee} ` +
+            `-pkgpath ${this.flippandoRealm} -gas-wanted ${gasWanted} -gas-fee ${defaultTxFee} ` +
             `-func ${method} ${gkArgs} -chainid ${chainId} ${signingKey}`
         );
       }
             
       const resp = (await this.wallet?.callMethod(
-        this.coreRealm,
+        this.flippandoRealm,
         method,
         args,
         TransactionEndpoint.BROADCAST_TX_COMMIT,
@@ -364,12 +364,12 @@ class Actions {
     if (gkLog) {
       const quotesEscaped = expr.replace(/'/g, `'\\''`);
       console.info(
-        `$ gnokey query vm/qeval --data '${this.coreRealm}.${quotesEscaped}'`
+        `$ gnokey query vm/qeval --data '${this.flippandoRealm}.${quotesEscaped}'`
       );
     }
 
     const resp = (await this.providerJSON?.evaluateExpression(
-      this.coreRealm,
+      this.flippandoRealm,
       expr
     )) as string;
 
@@ -391,455 +391,50 @@ class Actions {
   
 
   /****************
-   * ZenTasktic engine
+   * Hackerville engine
    ****************/
-
   /**
-   * Adds a new task
-   *
-   * @param taskName string - task name
-   */
-  
-  async AddTask(
-    taskName: string,
-  ): Promise<any> {
-    const response = await this.callMethod('AddTask', [
-      taskName
-    ]);
-    console.log("actions AddTask response ", JSON.stringify(response))
-    return response;
-  }
-
-   /**
-   * Removes a task
-   *
-   * @param taskId string - task id
-   */
-  
-   async RemoveTask(
-    taskId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('RemoveTask', [
-      taskId
-    ]);
-    console.log("actions RemoveTask response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Updates a task
-   *
-   * @param taskId string - task id
-   * @param taskBody string - task body
-   */
-  
-  async UpdateTask(
-    taskId: string,
-    taskBody: string,
-  ): Promise<any> {
-    const response = await this.callMethod('EditTask', [
-      taskId,
-      taskBody
-    ]);
-    console.log("actions EditTask response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Moves a task to a realm
-   *
-   * @param taskId string - task id
-   * @param realmId string - realm id: 1 - Assess, 2 - Decide, 3 - Do, 4 - Collections
-   */
-  
-  async MoveTaskToRealm(
-    taskId: string,
-    realmId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('MoveTaskToRealm', [
-      taskId,
-      realmId
-    ]);
-    console.log("actions MoveTaskToRealm response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Attaches a task to a project
-   *
-   * @param taskBody string - new task body
-   * @param projectId string - project id
-   */
-  
-  async AttachTaskToProject(
-    taskBody: string,
-    projectId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('AttachTaskToProject', [
-      taskBody,
-      projectId
-    ]);
-    console.log("actions AttachTaskToProject response ", JSON.stringify(response))
-    return response;
-  }
-  /**
-   * Edits a project task
-   *
-   * @param taskProjectId string - the id of the task in the project
-   * @param taskBody string - new task body
-   * @param projectId string - project id
-   */
-
-  async EditProjectTask(
-    taskProjectId: string,
-    taskBody: string,
-    projectId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('EditProjectTask', [
-      taskProjectId,
-      taskBody,
-      projectId
-    ]);
-    console.log("actions EditProjectTask response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Detaches a task from a project
-   *
-   * @param projectTaskId string - project task id
-   * @param projectId string - project id
-   */
-  
-  async DetachTaskFromProject(
-    projectTaskId: string,
-    projectId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('DetachTaskFromProject', [
-      projectTaskId,
-      projectId
-    ]);
-    console.log("actions DetachTaskFromProject response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Removes a task from a project
-   *
-   * @param projectTaskId string - project task id
-   * @param projectId string - project id
-   */
-  
-  async RemoveTaskFromProject(
-    projectTaskId: string,
-    projectId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('RemoveTaskFromProject', [
-      projectTaskId,
-      projectId
-    ]);
-    console.log("actions RemoveTaskFromProject response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Adds a context to a task
-   *
-   * @param contextId string - context id
-   * @param taskId string - task id
-   */
-
-  async AddContextToTask(
-    contextId: string,
-    taskId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('AddContextToTask', [
-      contextId,
-      taskId
-    ]);
-    console.log("actions AddContextToTask response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Adds a due date to a task
-   *
-   * @param taskId string - task id
-   * @param date string - date, formatted "YYYY-MM-DD"
-   */
-
-  async AssignDueDateToTask(
-    taskId: string,
-    date: string,
-  ): Promise<any> {
-    const response = await this.callMethod('SetTaskDueDate', [
-      taskId,
-      date
-    ]);
-    console.log("actions AddDateToTask response ", JSON.stringify(response))
-    return response;
-  }
-  
-  /**
-   * Get tasks by realm
-   */
-  
-  async GetTasksByRealm(realmId : string): Promise<any> {
-    const response = await this.evaluateExpression("GetTasksByRealm(\"" + realmId + "\")")
-    console.log("actions GetTasksByRealm response ", JSON.stringify(response))
-    return response;
-  }
-
-
-  // projects
-
-  /**
-   * Adds a new project
-   *
-   * @param projectName string - project name
-   */
-  
-  async AddProject(
-    projectName: string,
-  ): Promise<any> {
-    const response = await this.callMethod('AddProject', [
-      projectName
-    ]);
-    console.log("actions AddProject response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Removes a project
-   *
-   * @param projectId string - project id
-   */
-  
-  async RemoveProject(
-    projectId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('RemoveProject', [
-      projectId
-    ]);
-    console.log("actions RemoveProject response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Updates a project
-   *
-   * @param projectId string - project id
-   * @param projectBody string - project body
-   */
-  
-  async UpdateProject(
-    projectId: string,
-    projectBody: string,
-  ): Promise<any> {
-    const response = await this.callMethod('EditProject', [
-      projectId,
-      projectBody
-    ]);
-    console.log("actions EditProject response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Adds a context to a project
-   *
-   * @param contextId string - context id
-   * @param projectId string - project id
-   */
-
-  async AddContextToProject(
-    contextId: string,
-    projectId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('AddContextToProject', [
-      contextId,
-      projectId
-    ]);
-    console.log("actions AddContextToProject response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Adds a due date to a project
-   *
-   * @param projectId string - project id
-   * @param date string - date, formatted "YYYY-MM-DD"
-   */
-
-  async AssignDueDateToProject(
-    projectId: string,
-    date: string,
-  ): Promise<any> {
-    const response = await this.callMethod('SetProjectDueDate', [
-      projectId,
-      date
-    ]);
-    console.log("actions SetProjectDueDate response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Adds a context to a project task
-   *
-   * @param contextId string - context id
-   * @param projectId string - project id
-   * @param projectTaskId string - project task id
-   */
-
-  async AddContextToProjectTask(
-    contextId: string,
-    projectId: string,
-    projectTaskId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('AddContextToProjectTask', [
-      contextId,
-      projectId,
-      projectTaskId
-    ]);
-    console.log("actions AddContextToProjectTask response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Adds a due date to a project task
-   *
-   * @param projectId string - project id
-   * @param projectTaskId string - project task id
-   * @param date string - date, formatted "YYYY-MM-DD"
-   */
-
-  async AssignDueDateToProjectTask(
-    projectId: string,
-    projectTaskId: string,
-    date: string,
-  ): Promise<any> {
-    const response = await this.callMethod('SetProjectTaskDueDate', [
-      projectId,
-      projectTaskId,
-      date
-    ]);
-    console.log("actions SetProjectTaskDueDate response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Moves a project to a realm
-   *
-   * @param projectId string - project id
-   * @param realmId string - realm id: 1 - Assess, 2 - Decide, 3 - Do, 4 - Collections
-   */
-  
-  async MoveProjectToRealm(
-    projectId: string,
-    realmId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('MoveProjectToRealm', [
-      projectId,
-      realmId
-    ]);
-    console.log("actions MoveProjectToRealm response ", JSON.stringify(response))
-    return response;
-  }
-
-
-  /**
-   * Marks a task in a project as done (changes its realm id to 4)
-   *
-   * @param projectId string - project id
-   * @param projectTaskId string - the project task's id
-   */
-  
-  async MarkProjectTaskAsDone(
-    projectId: string,
-    projectTaskId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('MarkProjectTaskAsDone', [
-      projectId,
-      projectTaskId
-    ]);
-    console.log("actions MarkProjectTaskAsDone response ", JSON.stringify(response))
-    return response;
-  }
-  
-
-  /**
-   * Get projects by realm
-   */
-  
-  async GetProjectsByRealm(realmId : string): Promise<any> {
-    const response = await this.evaluateExpression("GetProjectsByRealm(\"" + realmId + "\")")
-    console.log("actions GetProjectsByRealm response ", JSON.stringify(response))
-    return response;
-  }
-
-
-  // contexts
-
-  /**
-   * Adds a new context
-   *
-   * @param contextName string - context name
-   */
-  
-  async AddContext(
-    contextName: string,
-  ): Promise<any> {
-    const response = await this.callMethod('AddContext', [
-      contextName
-    ]);
-    console.log("actions AddContext response ", JSON.stringify(response))
-    return response;
-  }
-
-
-   /**
-   * Removes a context
-   *
-   * @param contextName string - task name
-   */
-  
-   async RemoveContext(
-    contextId: string,
-  ): Promise<any> {
-    const response = await this.callMethod('RemoveContext', [
-      contextId
-    ]);
-    console.log("actions RemoveContext response ", JSON.stringify(response))
-    return response;
-  }
-
-  /**
-   * Updates a context
+   * Mint an airdropped NFT
    *
    * @param contextId string - context id
    * @param contextName string - context name
    */
   
-  async UpdateContext(
-    contextId: string,
-    contextName: string,
+  async MintAirdroppedNFT(
+    playerRecipient: string,
+    airdropName: string, 
+    airdropParentID: string,
+    airdropXPos: string,
+    airdropYPos: string,
+    gameType: string, 
+    gameLevel: string,
+    svgData: string,
   ): Promise<any> {
-    const response = await this.callMethod('EditContext', [
-      contextId,
-      contextName
+    const response = await this.callMethod('AirdropBasicFlipNFT', [
+      playerRecipient,
+      airdropName,
+      airdropParentID,
+      airdropXPos,
+      airdropYPos,
+      gameType, 
+      gameLevel,
+      svgData,
     ]);
-    console.log("actions EditContext response ", JSON.stringify(response))
+    console.log("actions AirdropBasicFlipNFT response ", JSON.stringify(response))
     return response;
   }
 
   /**
-   * Get all contexts
+   * Get all minted airdrop NFTs
    */
   
-  async GetAllContexts(): Promise<any> {
-    const response = await this.evaluateExpression("GetAllContexts()")
-    console.log("actions GetAllContexts response ", JSON.stringify(response))
+
+  async GetAllMintedAirdropNFTs(): Promise<any> {
+    const response = await this.evaluateExpression("GetAllMintedAirdropNFTs()")
+    console.log("actions GetAllMintedAirdropNFTs response ", JSON.stringify(response))
     return response;
   }
+  
 
 
 }

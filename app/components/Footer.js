@@ -11,11 +11,11 @@ export default function Footer() {
           <div style={{width: "100%", justifyContent: "center",  alignItems: "center"}}>
           <HStack style={{ fontSize: "medium", borderBottom: "1px solid #ffffff", justifyContent: "flex-end",  alignItems: "center"}}>
             <HStack>
-            <Link style={{textDecoration: "none"}} href="/docs">What is Flippando</Link>
+            <Link style={{textDecoration: "none"}} href="https://gno.flippando.xyz/docs">What is Flippando</Link>
             <Text> | </Text>
             <Link style={{textDecoration: "none"}} href="/airdrop">Airdrop</Link>
             <Text> | </Text>
-            <Link style={{textDecoration: "none"}} href="/roadmap">Roadmap</Link> 
+            <Link style={{textDecoration: "none"}} href="https://gno.flippando.xyz/roadmap">Roadmap</Link> 
             </HStack>
             <Text> | </Text>
             <Text>Community: </Text>

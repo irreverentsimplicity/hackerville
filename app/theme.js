@@ -5,7 +5,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bgGradient: 'linear(to-tr, purple.400, purple.900)', 
+        bgGradient: 'linear(to-tr, blue.700, green.900)', 
         color: 'white',
       },
     },
