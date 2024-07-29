@@ -65,8 +65,8 @@ const Home = () => {
   // hardcoded, to remove / refactor
   const mintAirdropNFT = async () => {
     const playerRecipient = "g1jvsnur7haahze6n6z3gzfdzu5yelr9rj3dajs7" // Brave account
-    const airdropName = "hackerville"
-    const firstObject = testNFT[1]
+    const firstObject = testNFT[0]
+    const airdropName = firstObject.airdropName;
     const airdropParentID = firstObject.airdropParentID;
     const airdropXPos = firstObject.airdropXPos;
     const airdropYPos = firstObject.airdropYPos;
