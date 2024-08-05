@@ -434,6 +434,28 @@ class Actions {
     console.log("actions GetAllMintedAirdropNFTs response ", JSON.stringify(response))
     return response;
   }
+
+  /**
+   * Call the GetUserNFTs function and return an array of basic NFTs
+   * @param playerAddr string
+   */
+  async getUserNFTs(
+    playerAddr: string,
+    readyToUse: string,
+  ): Promise<any> {
+    const response = await this.evaluateExpression("GetUserBasicFlipNFTs(\"" + playerAddr + "\", \"" + readyToUse +"\")")
+    console.log("actions GetUserBasicNFTs response ", JSON.stringify(response))
+    return response;
+  }
+
+  /**
+   * Call the GetBasicListings function and return a JSON object
+   */
+  async getBasicListings(): Promise<any> {
+    const response = await this.evaluateExpression("GetBasicListings()")
+    console.log("actions GetBasicListings response ", JSON.stringify(response))
+    return response;
+  }
   
 
 
