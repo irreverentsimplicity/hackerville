@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Flippando - the Game",
+    "version": "1.0.0",
+    "gameType": "airdrop",
+    "gameLevel": "64",
+    "svgData": "PHN2ZyBpZD0iZTJWMFFPVzhMbFgxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmtpPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMjUgMjUiIHNoYXBlLXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIj48cmVjdCB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIHJ4PSIwIiByeT0iMCIgZmlsbD0iI0RBNzBENiIgc3Ryb2tlLXdpZHRoPSIwIi8+PHRleHQgeD0iMTIiIHk9IjIyIiBmb250LXNpemU9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJibGFjayI+NjI8L3RleHQ+PC9zdmc+",
+    "airdropName": "hackerville",
+    "airdropParentID": "79",
+    "airdropXPos": "6",
+    "airdropYPos": "8"
+  },
+  {
+    "name": "Flippando - the Game",
+    "version": "1.0.0",
+    "gameType": "airdrop",
+    "gameLevel": "64",
+    "svgData": "PHN2ZyBpZD0iZTJWMFFPVzhMbFgxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmtpPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMjUgMjUiIHNoYXBlLXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIj48cmVjdCB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIHJ4PSIwIiByeT0iMCIgZmlsbD0iIzg3Q0VFQiIgc3Ryb2tlLXdpZHRoPSIwIi8+PHRleHQgeD0iMTIiIHk9IjIyIiBmb250LXNpemU9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJibGFjayI+NDk8L3RleHQ+PC9zdmc+",
+    "airdropName": "hackerville",
+    "airdropParentID": "148",
+    "airdropXPos": "1",
+    "airdropYPos": "7"
+  },
+  {
+    "name": "Flippando - the Game",
+    "version": "1.0.0",
+    "gameType": "airdrop",
+    "gameLevel": "64",
+    "svgData": "PHN2ZyBpZD0iZTJWMFFPVzhMbFgxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOmtpPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMjUgMjUiIHNoYXBlLXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIj48cmVjdCB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIHJ4PSIwIiByeT0iMCIgZmlsbD0iI0ZGMzNGNiIgc3Ryb2tlLXdpZHRoPSIwIi8+PHRleHQgeD0iMTIiIHk9IjIyIiBmb250LXNpemU9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJibGFjayI+NDY8L3RleHQ+PC9zdmc+",
+    "airdropName": "hackerville",
+    "airdropParentID": "5",
+    "airdropXPos": "6",
+    "airdropYPos": "6"
+  }
+]

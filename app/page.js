@@ -13,6 +13,7 @@ import Actions from "./util/actions";
 import './styles/globals.css'
 import styles from './styles/Home.module.css'
 import testNFT from './util/testNFT';
+import testNFTyellow from './util/testNFTyellow';
 
 const Home = () => {
 
@@ -23,6 +24,10 @@ const Home = () => {
   const [userAirdropMintedNFTs, setUserAirdropMintedNFTs] = useState([]);
   // tokenIDs from 1 to 100000
   const airdropTokenIDs = Array.from({ length: 10000 }, (_, i) => (i + 1).toString());
+  const maxTokenId = 20; // in prod is 20
+  const [randomMint, setRandomMint] = useState(null);
+  const [message, setMessage] = useState('');
+
 
   const [address, setAddress] = useState('');
   const dispatch = useDispatch();
@@ -43,6 +48,21 @@ const Home = () => {
     getMintedNFTs()
   }, [])
 
+  useEffect( () => {
+    fetchUserNFTs(address)
+  }, [address])
+
+  const fetchRandomMint = async () => {
+    const response = await fetch('/api/random-mint');
+    const data = await response.json();
+    console.log("fetchRandomMint response, ", JSON.stringify(data))
+    if (data.message) {
+        setMessage(data.message);
+    } else {
+        setRandomMint(data);
+    }
+};
+
   const getMintedNFTs = async () => {
     const actions = await Actions.getInstance();
     if (isLoadingMinted) {
@@ -54,7 +74,7 @@ const Home = () => {
             if (parsedResponse.length != 0) {
               const tokenIds = parsedResponse.tokenIDs.map(item => item.split(':')[0]);
               setAllMintedNFTs(tokenIds)
-              console.log(JSON.stringify(parsedResponse))
+              console.log("allMintedNFTs ", JSON.stringify(tokenIds))
             }
             setIsLoadingMinted(false);
           }
@@ -80,6 +100,7 @@ const Home = () => {
     const gameType = firstObject.gameType;
     const gameLevel = firstObject.gameLevel;
     const svgData = firstObject.svgData;
+    
 
     const actions = await Actions.getInstance();
 
@@ -102,9 +123,13 @@ const Home = () => {
     }
   }
 
+  const getRandomTokenID = (array) => array[Math.floor(Math.random() * array.length)];
+
   const mintAirdropNFT = async () => {
-    const playerRecipient = "g1jvsnur7haahze6n6z3gzfdzu5yelr9rj3dajs7" // Brave account
-    const firstObject = testNFT[15]
+    //const playerRecipient = "g1jvsnur7haahze6n6z3gzfdzu5yelr9rj3dajs7" // Brave account
+    // g12q46p4k5cjh5fewazxzs8an4xrhx3w0dcel7sd // Chrome account
+    const playerRecipient = address
+    const firstObject = testNFTyellow[0]
     const airdropName = firstObject.airdropName;
     const airdropParentID = firstObject.airdropParentID;
     const airdropXPos = firstObject.airdropXPos;
@@ -112,6 +137,22 @@ const Home = () => {
     const gameType = firstObject.gameType;
     const gameLevel = firstObject.gameLevel;
     const svgData = firstObject.svgData;
+
+    // airdrop selection logic
+    // check for maxToken
+    if (userAirdropMintedNFTs.length >= maxTokenId){
+      alert("Total number of allowed NFTs reached for this address.")
+      return
+    }
+    /*
+    const remainingTokenIDs = airdropTokenIDs.filter(id => !allMintedNFTs.includes(id));
+
+    const nextTokenID = getRandomTokenID(remainingTokenIDs)
+    console.log("nextTokenID, ", nextTokenID)
+    */
+
+    await fetchRandomMint()
+    console.log("randomMint, ", randomMint)
 
     const actions = await Actions.getInstance();
     console.log("address before fetchUserNFTs, ", address)
@@ -149,41 +190,46 @@ const Home = () => {
           if (response !== undefined){
           let parsedUsedResponse = JSON.parse(response);
           
-          if(parsedUsedResponse.userNFTs !== undefined && parsedUsedResponse.userNFTs.length !== 0){  
-            //setNfts(parsedResponse.userNFTs)
-            console.log("parseResponse", JSON.stringify(response, null, 2))
-            //dispatch(setUserBasicNFTs(parsedResponse.userNFTs))
-            let allBasicNFTs = parsedUsedResponse.userNFTs;
-            let userListings = [];
-            // get listings and filter
-            try {
-              console.log("getBasicListings")
-              actions.getBasicListings().then((response) => {
-               // console.log("getListings response in art.js", response);
-                let parsedResponse = JSON.parse(response);
-                console.log("getBasicListings parseResponse in page.js", parsedResponse)
-                if(parsedResponse.error === undefined){
-                  userListings = parsedResponse.marketplaceListings;
-                  
-                  if (userListings.length != 0) {
-                    const filteredBasicNFTs = allBasicNFTs.filter(nft =>
-                      nft.gameType === "airdrop" &&
-                      !userListings.some(listing => listing.tokenID === nft.tokenID)
-                    );
-                    console.log("filteredBasicNFTs: ", JSON.stringify(filteredBasicNFTs));
-                    setUserAirdropMintedNFTs(filteredBasicNFTs)
-                  } else {
-                    const filteredBasicNFTs = allBasicNFTs.filter(nft => nft.gameType === "airdrop");
-                    setUserAirdropMintedNFTs(filteredBasicNFTs)
-                    console.log("filteredBasicNFTs: ", JSON.stringify(filteredBasicNFTs));
+          if(parsedUsedResponse.userNFTs !== undefined){
+            if(parsedUsedResponse.userNFTs.length !== 0){  
+              //setNfts(parsedResponse.userNFTs)
+              console.log("parseResponse", JSON.stringify(response, null, 2))
+              //dispatch(setUserBasicNFTs(parsedResponse.userNFTs))
+              let allBasicNFTs = parsedUsedResponse.userNFTs;
+              let userListings = [];
+              // get listings and filter
+              try {
+                console.log("getBasicListings")
+                actions.getBasicListings().then((response) => {
+                // console.log("getListings response in art.js", response);
+                  let parsedResponse = JSON.parse(response);
+                  console.log("getBasicListings parseResponse in page.js", parsedResponse)
+                  if(parsedResponse.error === undefined){
+                    userListings = parsedResponse.marketplaceListings;
+                    
+                    if (userListings.length != 0) {
+                      const filteredBasicNFTs = allBasicNFTs.filter(nft =>
+                        nft.gameType === "airdrop" &&
+                        !userListings.some(listing => listing.tokenID === nft.tokenID)
+                      );
+                      console.log("filteredBasicNFTs: ", JSON.stringify(filteredBasicNFTs));
+                      setUserAirdropMintedNFTs(filteredBasicNFTs)
+                    } else {
+                      const filteredBasicNFTs = allBasicNFTs.filter(nft => nft.gameType === "airdrop");
+                      setUserAirdropMintedNFTs(filteredBasicNFTs)
+                      console.log("filteredBasicNFTs: ", JSON.stringify(filteredBasicNFTs));
+                    }
                   }
-                }
-              });
-            } catch (error) {
-              console.error('Error retrieving BasicNFTs:', error);
-              return null
+                });
+              } catch (error) {
+                console.error('Error retrieving BasicNFTs:', error);
+                return null
+              }
             }
-            
+            else {
+              // valid answer, zero length array
+              setUserAirdropMintedNFTs(parsedUsedResponse.userNFTs)
+            } 
           }
         }
       });
@@ -223,9 +269,9 @@ const Home = () => {
     <div style={{height: '60vh', alignItems: "space-between"}}>
       <AirdropForm address={address} setAddress={setAddress} mintAirdropNFT={mintAirdropNFT} />
       <div>
-        total NFTs in the airdrop: 10,000<br/>
+        Airdropped NFTs: 10,000, total minted: {allMintedNFTs.length} (expected canvas size: {getCanvasSize(allMintedNFTs.length)})<br/>
         total minted for the address provided: {userAirdropMintedNFTs.length}<br/>
-        total minted for the airdrop: {allMintedNFTs.length}, expected canvas size: {getCanvasSize(allMintedNFTs.length)}
+        
       </div>
 
 

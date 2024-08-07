@@ -29,7 +29,7 @@ const cleanUpRealmReturn = (ret: string, callType: string) => {
   // maketx adds and extra quote at the end of the string
   // so we need to have 2 slice values, one from 9 chars, for eval transaction
   // and one from 11 chars, for maketx
-  console.log("ret in cleanupRealmReturn", ret)
+  //console.log("ret in cleanupRealmReturn", ret)
   if (ret.trim() == "(undefined)"){
     return ""
   }
