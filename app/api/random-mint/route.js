@@ -28,7 +28,6 @@ export async function GET() {
     }
 
     // Filter out selected mints
-    // Filter out selected mints
     const availableMints = allMints.filter(mint => 
         !selectedMints.some(selected => 
             selected.airdropParentID === mint.airdropParentID &&
@@ -44,10 +43,6 @@ export async function GET() {
 
     // Select a random mint
     const randomMint = availableMints[Math.floor(Math.random() * availableMints.length)];
-
-    // Log the selected mint
-    selectedMints.push(randomMint);
-    fs.writeFileSync(selectedMintsFilePath, JSON.stringify(selectedMints, null, 2));
 
     return NextResponse.json(randomMint);
 }
