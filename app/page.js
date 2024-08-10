@@ -24,7 +24,7 @@ const Home = () => {
   const [userAirdropMintedNFTs, setUserAirdropMintedNFTs] = useState([]);
   // tokenIDs from 1 to 100000
   const airdropTokenIDs = Array.from({ length: 10000 }, (_, i) => (i + 1).toString());
-  const maxTokenId = 20; // in prod is 20
+  const maxTokenId = 64; // in prod is 64
   const [randomMint, setRandomMint] = useState(null);
   const [message, setMessage] = useState('');
 
@@ -65,7 +65,7 @@ const Home = () => {
 
   const getMintedNFTs = async () => {
     const actions = await Actions.getInstance();
-    if (isLoadingMinted) {
+    
       try {
         actions.GetAllMintedAirdropNFTs().then((response) => {
           //console.log("getUserGamesByStatus response in Flip", response);
@@ -79,14 +79,11 @@ const Home = () => {
             setIsLoadingMinted(false);
           }
           setIsLoadingMinted(false);
-          
-          //console.log("parseResponse", JSON.stringify(parsedResponse, null, 2))
         });
       } catch (err) {
         console.log("error in calling GetAllMintedAirdropNFTs", err);
       }
-      
-    }
+
   }
 
   // hardcoded, to remove / refactor
@@ -115,6 +112,7 @@ const Home = () => {
             console.log(JSON.stringify(parsedResponse))
           }
           
+          
         }
         //console.log("parseResponse", JSON.stringify(parsedResponse, null, 2))
       });
@@ -123,60 +121,71 @@ const Home = () => {
     }
   }
 
-  const getRandomTokenID = (array) => array[Math.floor(Math.random() * array.length)];
+  //const getRandomTokenID = (array) => array[Math.floor(Math.random() * array.length)];
 
   const mintAirdropNFT = async () => {
     //const playerRecipient = "g1jvsnur7haahze6n6z3gzfdzu5yelr9rj3dajs7" // Brave account
     // g12q46p4k5cjh5fewazxzs8an4xrhx3w0dcel7sd // Chrome account
-    const playerRecipient = address
-    const firstObject = testNFTyellow[0]
-    const airdropName = firstObject.airdropName;
-    const airdropParentID = firstObject.airdropParentID;
-    const airdropXPos = firstObject.airdropXPos;
-    const airdropYPos = firstObject.airdropYPos;
-    const gameType = firstObject.gameType;
-    const gameLevel = firstObject.gameLevel;
-    const svgData = firstObject.svgData;
 
-    // airdrop selection logic
-    // check for maxToken
-    if (userAirdropMintedNFTs.length >= maxTokenId){
-      alert("Total number of allowed NFTs reached for this address.")
-      return
-    }
-    /*
-    const remainingTokenIDs = airdropTokenIDs.filter(id => !allMintedNFTs.includes(id));
-
-    const nextTokenID = getRandomTokenID(remainingTokenIDs)
-    console.log("nextTokenID, ", nextTokenID)
-    */
 
     await fetchRandomMint()
     console.log("randomMint, ", randomMint)
+    if(randomMint !== null) {
+      const playerRecipient = address
+      const airdropName = randomMint.airdropName;
+      const airdropParentID = randomMint.airdropParentID;
+      const airdropXPos = randomMint.airdropXPos;
+      const airdropYPos = randomMint.airdropYPos;
+      const gameType = randomMint.gameType;
+      const gameLevel = randomMint.gameLevel;
+      const svgData = randomMint.svgData;
 
-    const actions = await Actions.getInstance();
-    console.log("address before fetchUserNFTs, ", address)
-    await fetchUserNFTs(address)
-    console.log("firstObject ", JSON.stringify(firstObject))
-    
-    /*
-    try {
-      actions.MintAirdroppedNFT(
-        playerRecipient, airdropName, airdropParentID, airdropXPos, airdropYPos, gameType, gameLevel, svgData
-      ).then((response) => {
-        console.log("MintAirdroppedNFT response in page.js", response);
-        if (response !== undefined){
-          let parsedResponse = JSON.parse(response);
-          if (parsedResponse.length != 0) {
-            console.log(JSON.stringify(parsedResponse))
+      // airdrop selection logic
+      // check for maxToken
+      if (userAirdropMintedNFTs.length >= maxTokenId){
+        alert("Total number of allowed NFTs reached for this address.")
+        return
+      }
+
+      const actions = await Actions.getInstance();
+      
+      
+      
+      try {
+        actions.MintAirdroppedNFT(
+          playerRecipient, airdropName, airdropParentID, airdropXPos, airdropYPos, gameType, gameLevel, svgData
+        ).then(async (response) => {
+          console.log("MintAirdroppedNFT response in page.js", response);
+          if (response !== undefined){
+            let parsedResponse = JSON.parse(response);
+            if (parsedResponse.length != 0) {
+              console.log(JSON.stringify(parsedResponse))
+              
+              
+              // log the successful mint
+              await fetch('/api/log-mint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(randomMint),
+              });
+
+              console.log("address before fetchUserNFTs, ", address)
+              await fetchUserNFTs(address)
+              await getMintedNFTs()
+            }
+            
           }
-          
-        }
-        //console.log("parseResponse", JSON.stringify(parsedResponse, null, 2))
-      });
-    } catch (err) {
-      console.log("error in calling MintAirdroppedNFT", err);
-    }*/
+          //console.log("parseResponse", JSON.stringify(parsedResponse, null, 2))
+        });
+      } catch (err) {
+        console.log("error in calling MintAirdroppedNFT", err);
+      }
+    }
+    else {
+      alert("something made a boo-boo, try again")
+    }
   }
 
   const fetchUserNFTs = async (address) => {
@@ -266,37 +275,30 @@ const Home = () => {
     
     <div className={styles.container}>
     <Header userGnotBalances={userGnotBalances}/>  
-    <div style={{height: '60vh', alignItems: "space-between"}}>
-      <AirdropForm address={address} setAddress={setAddress} mintAirdropNFT={mintAirdropNFT} />
-      <div>
+    <div style={{height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+    <AirdropForm address={address} setAddress={setAddress} mintAirdropNFT={mintAirdropNFT} />
+
+    <div style={{textAlign: 'center', marginTop: '20px'}}>
         Airdropped NFTs: 10,000, total minted: {allMintedNFTs.length} (expected canvas size: {getCanvasSize(allMintedNFTs.length)})<br/>
         total minted for the address provided: {userAirdropMintedNFTs.length}<br/>
-        
-      </div>
+    </div>
 
-
-      <div className="z-10 items-center justify-center font-mono text-sm lg:flex pb-2">
-          Ending in:
-      </div>
-      <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">
-      <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">
-        <p className="fixed mb-4 left-0 top-0 right-0 flex w-full justify-center 
-        border-b border-gray-400 bg-green-800 pb-6 pt-4 
-        backdrop-blur-2xl dark:border-neutral-800 dark:bg-green-900 dark:from-inherit 
-        lg:static lg:w-auto  lg:rounded-md lg:border lg:bg-green-900 lg:p-4 lg:dark:bg-blue-800">
-        <Counter font={"Monospace"}/>
-        </p> 
+    <div style={{marginTop: '20px', textAlign: 'center'}}>
+        <div className="z-10 items-center justify-center font-mono text-sm lg:flex pb-2 pt-24">
+            Ending in:
         </div>
-      </div>
+        <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">
+            <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">
+                <p className="flex justify-center border-b border-gray-400 bg-green-800 pb-4 pt-6 
+                backdrop-blur-2xl dark:border-neutral-800 dark:bg-green-900 dark:from-inherit 
+                lg:rounded-md lg:border lg:bg-green-900 lg:pr-4 lg:pl-4 lg:dark:bg-blue-800">
+                    <Counter font={"Monospace"}/>
+                </p> 
+            </div>
+        </div>
+    </div>
+</div>
 
-      
-
-      <div className="flex-col z-10 w-full items-center justify-center font-mono text-md lg:flex">
-        <Link href="/airdrop">
-            Read the full thing.
-        </Link>
-      </div>
-      </div>
       <Footer />
       </div>
   )

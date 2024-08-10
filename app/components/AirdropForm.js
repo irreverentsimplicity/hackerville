@@ -19,22 +19,24 @@ const AirdropForm = ({ address, setAddress, mintAirdropNFT }) => {
   };
 
   return (
-    <FormControl isInvalid={isError}>
-      <Input
+    <FormControl isInvalid={isError} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Input
         type="text"
         placeholder="Enter Gno chain address"
         value={address}
         onChange={(e) => {
-          setAddress(e.target.value);
-          setIsError(!validateAddress(e.target.value));
+        setAddress(e.target.value);
+        setIsError(!validateAddress(e.target.value));
         }}
         maxLength={42}
-      />
-      {isError && <FormErrorMessage>Invalid Gno chain address.</FormErrorMessage>}
-      <Button onClick={handleMint} mt={4}>
+        style={{ width: '80%' }} // Make the input 80% of the width
+    />
+    {isError && <FormErrorMessage>Invalid Gno chain address.</FormErrorMessage>}
+    <Button onClick={handleMint} mt={4} style={{ alignSelf: 'center' }}> 
         Mint
-      </Button>
+    </Button>
     </FormControl>
+
   );
 };
 

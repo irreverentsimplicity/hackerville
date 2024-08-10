@@ -34,7 +34,7 @@ const cleanUpRealmReturn = (ret: string, callType: string) => {
     return ""
   }
   if (callType == "maketx"){
-    return ret.slice(2, -9).replace(/\\"/g, '"');
+    return ret.slice(2, -23).replace(/\\"/g, '"');
   }
   else if (callType == "eval"){
     return ret.slice(2, -9).replace(/\\"/g, '"');
