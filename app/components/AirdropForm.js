@@ -1,7 +1,7 @@
-import { Button, Input, FormControl, FormErrorMessage } from '@chakra-ui/react';
+import { Button, Input, FormControl, FormErrorMessage, Spinner, Text } from '@chakra-ui/react';
 import { useState } from "react";
 
-const AirdropForm = ({ address, setAddress, mintAirdropNFT }) => {
+const AirdropForm = ({ address, setAddress, mintAirdropNFT, isMinting }) => {
   const [isError, setIsError] = useState(false);
 
   const validateAddress = (address) => {
@@ -33,7 +33,13 @@ const AirdropForm = ({ address, setAddress, mintAirdropNFT }) => {
     />
     {isError && <FormErrorMessage>Invalid Gno chain address.</FormErrorMessage>}
     <Button onClick={handleMint} mt={4} style={{ alignSelf: 'center' }}> 
-        Mint
+        {isMinting && 
+            <Spinner />
+        }
+        {!isMinting &&
+            <Text>Mint</Text>
+        }
+        
     </Button>
     </FormControl>
 

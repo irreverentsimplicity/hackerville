@@ -13,13 +13,13 @@ import Actions from "./util/actions";
 import './styles/globals.css'
 import styles from './styles/Home.module.css'
 import testNFT from './util/testNFT';
-import testNFTyellow from './util/testNFTyellow';
 
 const Home = () => {
 
   const rpcEndpoint = useSelector(state => state.hackerville.rpcEndpoint);
   const userGnotBalances = useSelector(state => state.hackerville.userGnotBalances);
   const [isLoadingMinted, setIsLoadingMinted] = useState(true)
+  const [isMinting, setIsMinting] = useState(false)
   const [allMintedNFTs, setAllMintedNFTs] = useState([]);
   const [userAirdropMintedNFTs, setUserAirdropMintedNFTs] = useState([]);
   // tokenIDs from 1 to 100000
@@ -150,7 +150,7 @@ const Home = () => {
       const actions = await Actions.getInstance();
       
       
-      
+      setIsMinting(true)
       try {
         actions.MintAirdroppedNFT(
           playerRecipient, airdropName, airdropParentID, airdropXPos, airdropYPos, gameType, gameLevel, svgData
@@ -160,8 +160,7 @@ const Home = () => {
             let parsedResponse = JSON.parse(response);
             if (parsedResponse.length != 0) {
               console.log(JSON.stringify(parsedResponse))
-              
-              
+
               // log the successful mint
               await fetch('/api/log-mint', {
                 method: 'POST',
@@ -174,6 +173,7 @@ const Home = () => {
               console.log("address before fetchUserNFTs, ", address)
               await fetchUserNFTs(address)
               await getMintedNFTs()
+              setIsMinting(false)
             }
             
           }
@@ -276,7 +276,7 @@ const Home = () => {
     <div className={styles.container}>
     <Header userGnotBalances={userGnotBalances}/>  
     <div style={{height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-    <AirdropForm address={address} setAddress={setAddress} mintAirdropNFT={mintAirdropNFT} />
+    <AirdropForm address={address} setAddress={setAddress} mintAirdropNFT={mintAirdropNFT} isMinting={isMinting} />
 
     <div style={{textAlign: 'center', marginTop: '20px'}}>
         Airdropped NFTs: 10,000, total minted: {allMintedNFTs.length} (expected canvas size: {getCanvasSize(allMintedNFTs.length)})<br/>
