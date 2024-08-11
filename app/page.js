@@ -86,43 +86,6 @@ const Home = () => {
 
   }
 
-  // hardcoded, to remove / refactor
-  const mintAirdropNFTTest = async () => {
-    const playerRecipient = "g1jvsnur7haahze6n6z3gzfdzu5yelr9rj3dajs7" // Brave account
-    const firstObject = testNFT[15]
-    const airdropName = firstObject.airdropName;
-    const airdropParentID = firstObject.airdropParentID;
-    const airdropXPos = firstObject.airdropXPos;
-    const airdropYPos = firstObject.airdropYPos;
-    const gameType = firstObject.gameType;
-    const gameLevel = firstObject.gameLevel;
-    const svgData = firstObject.svgData;
-    
-
-    const actions = await Actions.getInstance();
-
-    try {
-      actions.MintAirdroppedNFT(
-        playerRecipient, airdropName, airdropParentID, airdropXPos, airdropYPos, gameType, gameLevel, svgData
-      ).then((response) => {
-        console.log("MintAirdroppedNFT response in page.js", response);
-        if (response !== undefined){
-          let parsedResponse = JSON.parse(response);
-          if (parsedResponse.length != 0) {
-            console.log(JSON.stringify(parsedResponse))
-          }
-          
-          
-        }
-        //console.log("parseResponse", JSON.stringify(parsedResponse, null, 2))
-      });
-    } catch (err) {
-      console.log("error in calling MintAirdroppedNFT", err);
-    }
-  }
-
-  //const getRandomTokenID = (array) => array[Math.floor(Math.random() * array.length)];
-
   const mintAirdropNFT = async () => {
     //const playerRecipient = "g1jvsnur7haahze6n6z3gzfdzu5yelr9rj3dajs7" // Brave account
     // g12q46p4k5cjh5fewazxzs8an4xrhx3w0dcel7sd // Chrome account
@@ -174,6 +137,7 @@ const Home = () => {
               await fetchUserNFTs(address)
               await getMintedNFTs()
               setIsMinting(false)
+              alert("Your NFT has been minted")
             }
             
           }
