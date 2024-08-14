@@ -249,7 +249,7 @@ const Home = () => {
 
     <div style={{marginTop: '20px', textAlign: 'center'}}>
         <div className="z-10 items-center justify-center font-mono text-sm lg:flex pb-2 pt-24">
-            Ending in:
+            Starting in:
         </div>
         <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">
             <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">

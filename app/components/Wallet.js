@@ -19,17 +19,14 @@ const Wallet = ({ userGnotBalances }) => {
       console.log("newNetwork, ", newNetwork)
       dispatch(setRpcEndpoint(newNetwork))
       const actionsInstance = await Actions.getInstance();
-      let faucetUrl = "";
-      let flippandoRealm = "";
+      let faucetUrl = "https://faucet.irreverentsimplicity.xyz";
+      let flippandoRealm = "gno.land/r/flippando/flippando";
       if (newNetwork === "http://localhost:26657"){
         faucetUrl = "http://127.0.0.1:5050";
         flippandoRealm = "gno.land/r/demo/flippando"
-      } else if (newNetwork === "https://rpc.flippando.xyz") {
-        faucetUrl = "https://faucet.flippando.xyz";
-        flippandoRealm = "gno.land/r/demo/flippando"
-      } else if (newNetwork === "https://portal-loop.gnoteam.com"){
-        faucetUrl = "https://faucet.flippando.xyz";
-        flippandoRealm = "gno.land/r/demo/flippando/v1"
+      } else if (newNetwork === "https://rpc.irreverentsimplicity.xyz") {
+        faucetUrl = "https://faucet.irreverentsimplicity.xyz";
+        flippandoRealm = "gno.land/r/flippando/flippando"
       }
       actionsInstance.setFaucetUrl(faucetUrl);
       actionsInstance.setFlippandoRealm(flippandoRealm);
@@ -61,9 +58,9 @@ const Wallet = ({ userGnotBalances }) => {
           borderColor="blue.500"
           _hover={{ bg: 'blue.600' }}
           _focus={{ boxShadow: 'outline' }}>
+          
+          <option value="https://rpc.irreverentsimplicity.xyz" >Irreverentsimplicity RPC</option>
           {showLocalOption && <option value="http://localhost:26657">Local node</option>}
-          <option value="https://rpc.flippando.xyz" >Flippando RPC</option>
-          <option value="https://portal-loop.gnoteam.com">Portal Loop RPC</option>
         </Select>
         </div>
       </div>
