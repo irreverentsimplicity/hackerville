@@ -1,7 +1,7 @@
 'use client';
 
 
-import { saveToLocalStorage } from './localstorage';
+import { saveToLocalStorage } from './localstorage.ts';
 import {
   defaultFaucetTokenKey,
   defaultMnemonicKey,
@@ -12,14 +12,14 @@ import {
   TM2Error,
   TransactionEndpoint
 } from '@gnolang/tm2-js-client';
-import { generateMnemonic } from './crypto';
+import { generateMnemonic } from './crypto.ts';
 import Long from 'long';
-import Config from './config';
+import Config from './config.ts';
 
 import {
   ErrorTransform
-} from './errors';
-import { UserFundedError } from '../types/errors';
+} from './errors.ts';
+import { UserFundedError } from '../types/errors.ts';
 
 // ENV values //
 const defaultGasWanted: Long = new Long(800_000_0);
