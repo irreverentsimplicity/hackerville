@@ -247,20 +247,7 @@ const Home = () => {
         total minted for the address provided: {userAirdropMintedNFTs.length}<br/>
     </div>
 
-    <div style={{marginTop: '20px', textAlign: 'center'}}>
-        <div className="z-10 items-center justify-center font-mono text-sm lg:flex pb-2 pt-24">
-            Starting in:
-        </div>
-        <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">
-            <div className="z-10 w-full items-center justify-center font-mono text-lg lg:flex">
-                <p className="flex justify-center border-b border-gray-400 bg-green-800 pb-4 pt-6 
-                backdrop-blur-2xl dark:border-neutral-800 dark:bg-green-900 dark:from-inherit 
-                lg:rounded-md lg:border lg:bg-green-900 lg:pr-4 lg:pl-4 lg:dark:bg-blue-800">
-                    <Counter font={"Monospace"}/>
-                </p> 
-            </div>
-        </div>
-    </div>
+    
 </div>
 
       <Footer />
